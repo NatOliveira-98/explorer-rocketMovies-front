@@ -12,12 +12,13 @@ export const theme = {
 
     gray_veryLight: '#f4ede8',
     gray_light: '#e5e5e5',
-    gray_medium: '#948f99',
+    gray_medium: '#cac4cf',
+    gray_mediumDark: '#948f99',
     gray_dark: '#3e3b47',
     gray_veryDark: '#312e38',
 
     gray_warm: '#999691',
   },
 
-  fonts: {},
+  debugger: '1px solid red',
 };
