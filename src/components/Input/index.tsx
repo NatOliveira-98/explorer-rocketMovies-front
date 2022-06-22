@@ -3,7 +3,7 @@ import { InputHTMLAttributes } from 'react';
 import { Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  icon: JSX.Element;
+  icon?: JSX.Element;
   iconPassword?: JSX.Element;
   showPasswordIcon?: boolean;
 };

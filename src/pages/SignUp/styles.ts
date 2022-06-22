@@ -60,14 +60,28 @@ const Form = styled.form`
   }
 
   a {
-    margin-top: 1.6rem;
+    position: relative;
+    margin: 1.6rem auto 0;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
     color: ${({ theme }) => theme.colors.brand};
     text-align: center;
 
     &:focus {
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      &::after {
+        content: '';
+        width: 16.3rem;
+        height: 1px;
+
+        position: absolute;
+        bottom: -1px;
+        left: 4px;
+
+        background-color: ${({ theme }) => theme.colors.brand};
+      }
     }
   }
 `;

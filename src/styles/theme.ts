@@ -6,7 +6,7 @@ export const theme = {
     background_medium: '#1c1b1e',
     background_dark: '#0d0c0f',
 
-    background_pink: '#ff859baa',
+    background_pink: '#ff859b1a',
 
     white: '#fff',
 
