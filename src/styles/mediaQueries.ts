@@ -9,4 +9,5 @@ export const device = {
   laptop_l: '(min-width: 1440px)',
 
   desktop: '(min-width: 1920px)',
+  desktop_ultrawide: '(min-width: 2560px)',
 };

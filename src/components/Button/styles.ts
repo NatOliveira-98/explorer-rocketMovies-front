@@ -5,6 +5,11 @@ const Container = styled.button`
   padding: 1.6rem;
   margin: 2.4rem 0;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
   background-color: ${({ theme }) => theme.colors.brand};
   border-radius: 1rem;
 
