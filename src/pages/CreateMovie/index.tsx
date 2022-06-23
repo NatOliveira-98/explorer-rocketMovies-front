@@ -3,7 +3,15 @@ import { Input } from '../../components/Input';
 import { ReturnToHome } from '../../components/ReturnToHome';
 import { CreateMovieGenre } from '../../components/CreateMovieGenre';
 
-import { Container, Main, Form, Textarea, Markers } from './styles';
+import {
+  Container,
+  Main,
+  Form,
+  Textarea,
+  Markers,
+  FormButtons,
+} from './styles';
+import { Button } from '../../components/Button';
 
 export const CreateMovie = () => {
   return (
@@ -27,9 +35,16 @@ export const CreateMovie = () => {
               <h3>Marcadores</h3>
               <div className="movies-genre-container">
                 <CreateMovieGenre value="Ação" />
+                <CreateMovieGenre value="Ação" />
+                <CreateMovieGenre value="Ação" />
                 <CreateMovieGenre isNew />
               </div>
             </Markers>
+
+            <FormButtons>
+              <Button isCancelEvent>Excluir filme</Button>
+              <Button>Salvar alterações</Button>
+            </FormButtons>
           </div>
         </Form>
       </Main>

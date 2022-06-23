@@ -27,7 +27,7 @@ const Main = styled.main`
 `;
 
 const Form = styled.form`
-  height: 650px;
+  height: 700px;
   margin-top: 1.5rem;
   padding: 5px;
 
@@ -68,6 +68,19 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  @media ${device.laptop_m} {
+    /* height: 100%; */
+
+    .flex-container {
+      gap: 2.5rem;
+    }
+
+    .inputs-container {
+      flex-direction: row;
+      gap: 4rem;
+    }
   }
 `;
 
@@ -126,8 +139,47 @@ const Markers = styled.div`
   .movies-genre-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
+
+    padding: 1.6rem;
+
+    background-color: ${({ theme }) => theme.colors.background_dark};
+    border-radius: 8px;
+  }
+
+  @media ${device.tablet_s} {
+    .movies-genre-container {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+    }
+  }
+
+  @media ${device.tablet} {
+    .movies-genre-container {
+      grid-template-columns: repeat(3, auto);
+    }
+  }
+
+  @media ${device.laptop_m} {
+    .movies-genre-container {
+      grid-template-columns: repeat(5, auto);
+    }
   }
 `;
 
-export { Container, Main, Form, Textarea, Markers };
+const FormButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  button {
+    margin: 0;
+  }
+
+  @media ${device.tablet} {
+    flex-direction: row;
+    gap: 4rem;
+  }
+`;
+
+export { Container, Main, Form, Textarea, Markers, FormButtons };

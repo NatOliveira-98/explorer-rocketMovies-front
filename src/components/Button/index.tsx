@@ -3,10 +3,19 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Container } from './styles';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  changeColor?: boolean;
+  isCancelEvent?: boolean;
   children?: ReactNode;
 };
 
-export const Button = ({ children, ...rest }: ButtonProps) => {
-  return <Container {...rest}>{children}</Container>;
+export const Button = ({ isCancelEvent, children, ...rest }: ButtonProps) => {
+  return (
+    <Container
+      style={{
+        backgroundColor: isCancelEvent ? '#0d0c0f' : '',
+        color: isCancelEvent ? '#ff859b' : '',
+      }}
+    >
+      {children}
+    </Container>
+  );
 };

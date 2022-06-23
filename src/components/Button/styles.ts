@@ -10,6 +10,8 @@ const Container = styled.button`
   align-items: center;
   gap: 8px;
 
+  color: ${({ theme }) => theme.colors.gray_veryDark};
+
   background-color: ${({ theme }) => theme.colors.brand};
   border-radius: 1rem;
 

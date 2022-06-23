@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin-bottom: 8px;
   padding: 1.6rem;
 
   display: flex;
