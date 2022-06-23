@@ -45,6 +45,8 @@ const Container = styled.section`
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
+
+    text-align: center;
   }
 
   &:focus-within {

@@ -7,6 +7,7 @@ export const theme = {
     background_dark: '#0d0c0f',
 
     background_pink: '#ff859b1a',
+    background_gray_warm: '#282123',
 
     white: '#fff',
 

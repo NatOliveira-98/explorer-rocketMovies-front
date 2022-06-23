@@ -1,4 +1,5 @@
 import { FiStar } from 'react-icons/fi';
+
 import { MovieGenre } from '../MovieGenre';
 
 import { Container } from './styles';

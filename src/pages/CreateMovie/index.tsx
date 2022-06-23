@@ -1,5 +1,6 @@
 import { Header } from '../../components/Header';
 import { Input } from '../../components/Input';
+import { Button } from '../../components/Button';
 import { ReturnToHome } from '../../components/ReturnToHome';
 import { CreateMovieGenre } from '../../components/CreateMovieGenre';
 
@@ -11,7 +12,6 @@ import {
   Markers,
   FormButtons,
 } from './styles';
-import { Button } from '../../components/Button';
 
 export const CreateMovie = () => {
   return (
