@@ -19,6 +19,10 @@ const Container = styled.button`
     outline: 1px solid ${({ theme }) => theme.colors.brand};
     outline-offset: 3px;
   }
+
+  &:disabled {
+    pointer-events: none;
+  }
 `;
 
 export { Container };
