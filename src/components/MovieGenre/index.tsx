@@ -1,9 +1,9 @@
 import Container from './styles';
 
-type TagProps = {
+type MovieGenreProps = {
   title: string;
 };
 
-export const Tag = ({ title }: TagProps) => {
+export const MovieGenre = ({ title }: MovieGenreProps) => {
   return <Container>{title}</Container>;
 };

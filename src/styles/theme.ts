@@ -17,7 +17,7 @@ export const theme = {
     gray_dark: '#3e3b47',
     gray_veryDark: '#312e38',
 
-    gray_warm: '#999691',
+    gray_warm: '#999591',
   },
 
   debugger: '1px solid red',

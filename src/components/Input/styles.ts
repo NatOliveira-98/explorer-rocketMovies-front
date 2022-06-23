@@ -29,6 +29,16 @@ const Container = styled.div`
     color: ${({ theme }) => theme.colors.white};
   }
 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
   button {
     display: flex;
     justify-content: center;

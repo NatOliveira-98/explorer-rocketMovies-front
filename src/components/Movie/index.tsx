@@ -1,5 +1,5 @@
 import { FiStar } from 'react-icons/fi';
-import { Tag } from '../Tag';
+import { MovieGenre } from '../MovieGenre';
 
 import { Container } from './styles';
 
@@ -25,9 +25,9 @@ export const Movie = () => {
       </p>
 
       <div className="tags-container">
-        <Tag title="Ficção Científica" />
-        <Tag title="Drama" />
-        <Tag title="Família" />
+        <MovieGenre title="Ficção Científica" />
+        <MovieGenre title="Drama" />
+        <MovieGenre title="Família" />
       </div>
 
       <a href="/"></a>
