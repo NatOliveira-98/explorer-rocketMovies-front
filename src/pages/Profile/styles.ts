@@ -20,6 +20,10 @@ const Container = styled.div`
     align-items: center;
 
     background-color: ${({ theme }) => theme.colors.background_pink};
+
+    a {
+      padding-left: 5rem;
+    }
   }
 
   @media ${device.laptop_m} {
@@ -67,7 +71,7 @@ const UserImg = styled.div`
   > label {
     position: absolute;
     bottom: 7px;
-    right: 9.5rem;
+    right: 8rem;
 
     display: flex;
     justify-content: center;

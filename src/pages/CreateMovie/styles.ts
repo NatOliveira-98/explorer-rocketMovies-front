@@ -182,4 +182,28 @@ const FormButtons = styled.div`
   }
 `;
 
-export { Container, Main, Form, Textarea, Markers, FormButtons };
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 40rem;
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  div {
+    width: 60%;
+
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    button {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+export { Container, Main, Form, Textarea, Markers, FormButtons, ModalContent };

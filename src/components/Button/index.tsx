@@ -23,6 +23,7 @@ export const Button = ({
         opacity: isBlocked ? '0.5' : '',
       }}
       disabled={isBlocked}
+      {...rest}
     >
       {children}
     </Container>

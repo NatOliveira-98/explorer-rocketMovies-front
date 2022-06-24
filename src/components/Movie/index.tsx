@@ -1,12 +1,18 @@
+import { ButtonHTMLAttributes } from 'react';
+import { Link } from 'react-router-dom';
 import { FiStar } from 'react-icons/fi';
 
 import { MovieGenre } from '../MovieGenre';
 
 import { Container } from './styles';
 
-export const Movie = () => {
+type MovieProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  data?: object;
+};
+
+export const Movie = ({ data, ...rest }: MovieProps) => {
   return (
-    <Container>
+    <Container {...rest}>
       <h3>Interestellar</h3>
 
       <div className="stars-rate-container">
@@ -30,8 +36,6 @@ export const Movie = () => {
         <MovieGenre title="Drama" />
         <MovieGenre title="Família" />
       </div>
-
-      <a href="/"></a>
     </Container>
   );
 };

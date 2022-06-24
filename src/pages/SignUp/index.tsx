@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   FiMail,
   FiLock,
@@ -33,10 +34,10 @@ export const SignUp = () => {
 
         <Button type="submit">Cadastrar</Button>
 
-        <a href="#">
+        <Link to="/">
           <FiArrowLeft size={20} />
           Voltar para o login
-        </a>
+        </Link>
       </Form>
 
       <Background />

@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import { device } from '../../styles/mediaQueries';
 
-const Container = styled.section`
+const Container = styled.button`
   width: 98%;
   padding: 3.2rem;
 
   background-color: ${({ theme }) => theme.colors.background_pink};
   border-radius: 1.6rem;
 
+  cursor: pointer;
+
   h3 {
     color: ${({ theme }) => theme.colors.gray_veryLight};
     font-size: 2.4rem;
     line-height: 3.16rem;
     font-weight: 700;
+    text-align: left;
 
     margin-bottom: 1rem;
   }
