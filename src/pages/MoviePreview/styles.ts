@@ -24,6 +24,29 @@ const Main = styled.main`
 
   width: 80%;
   margin: 4.74rem auto 6rem;
+
+  .options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .movie-edit-options {
+    display: flex;
+    align-self: flex-start;
+    gap: 1rem;
+
+    button {
+      display: flex;
+      align-items: center;
+
+      background: none;
+    }
+
+    svg {
+      stroke: ${({ theme }) => theme.colors.brand};
+    }
+  }
 `;
 
 const MovieInfo = styled.div`

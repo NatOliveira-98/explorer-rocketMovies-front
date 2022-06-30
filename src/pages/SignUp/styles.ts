@@ -98,4 +98,24 @@ const Background = styled.div`
   }
 `;
 
-export { Container, Form, Background };
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 40rem;
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  div {
+    width: 40%;
+
+    button {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+export { Container, Form, Background, ModalContent };

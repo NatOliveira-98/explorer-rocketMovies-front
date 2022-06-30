@@ -11,11 +11,11 @@ export const Home = () => {
   const navigate = useNavigate();
 
   function handleShowCreateMovie() {
-    navigate('/movie/create');
+    navigate('/movies/create');
   }
 
   function handleShowMoviePreview(id: any) {
-    navigate(`/movie/preview/${id}`);
+    navigate(`/movies/preview/${id}`);
   }
 
   return (

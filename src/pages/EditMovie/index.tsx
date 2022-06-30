@@ -40,7 +40,7 @@ const modalStyles = {
   },
 };
 
-export const CreateMovie = () => {
+export const EditMovie = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export const CreateMovie = () => {
     setIsModalOpen(false);
   }
 
-  function handleCancelMovieCreation(event: FormEvent) {
+  function handleCancelMovieEdition(event: FormEvent) {
     event.preventDefault();
 
     handleOpenModal();
@@ -62,7 +62,7 @@ export const CreateMovie = () => {
   function handleCreateMovie(event: FormEvent) {
     event.preventDefault();
 
-    toast.success('Filme criado com sucesso');
+    toast.success('Filme editado com sucesso');
     setTimeout(() => navigate('/'), 1000);
   }
 
@@ -75,7 +75,7 @@ export const CreateMovie = () => {
 
         <Form>
           <div className="flex-container">
-            <h2>Novo filme</h2>
+            <h2>Editar filme</h2>
 
             <div className="inputs-container">
               <Input type="text" placeholder="Título" />
@@ -95,7 +95,7 @@ export const CreateMovie = () => {
             </Markers>
 
             <FormButtons>
-              <Button isCancelEvent onClick={handleCancelMovieCreation}>
+              <Button isCancelEvent onClick={handleCancelMovieEdition}>
                 Cancelar
               </Button>
 
@@ -106,7 +106,7 @@ export const CreateMovie = () => {
                 ariaHideApp={false}
               >
                 <ModalContent id="modal-content">
-                  <h2>Deseja cancelar a criação do filme?</h2>
+                  <h2>Deseja cancelar a edição do filme?</h2>
 
                   <div>
                     <Button isCancelEvent onClick={handleCloseModal}>

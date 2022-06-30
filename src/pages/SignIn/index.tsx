@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEyeOff, FiEye } from 'react-icons/fi';
 
@@ -7,6 +8,12 @@ import { Button } from '../../components/Button';
 import { Container, Form, Background } from './styles';
 
 export const SignIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  function handleShowPassword() {
+    setShowPassword(showPassword ? false : true);
+  }
+
   return (
     <Container>
       <Form>
@@ -18,10 +25,13 @@ export const SignIn = () => {
         <Input icon={<FiMail size={20} />} type="email" placeholder="E-mail" />
         <Input
           icon={<FiLock size={20} />}
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Senha"
           showPasswordIcon
-          iconPassword={<FiEyeOff size={20} />}
+          iconPassword={
+            showPassword ? <FiEye size={20} /> : <FiEyeOff size={20} />
+          }
+          btnClicked={handleShowPassword}
         />
 
         <Button type="submit">Entrar</Button>

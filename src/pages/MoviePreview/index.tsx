@@ -1,4 +1,5 @@
-import { FiStar, FiClock } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { FiStar, FiClock, FiEdit3, FiX } from 'react-icons/fi';
 import avatarImg from '../../assets/avatar_placeholder.svg';
 
 import { Header } from '../../components/Header';
@@ -8,12 +9,29 @@ import { MovieGenre } from '../../components/MovieGenre';
 import { Container, Main, MovieInfo } from './styles';
 
 export const MoviePreview = () => {
+  const navigate = useNavigate();
+
+  function handleEditMovie(id: number) {
+    navigate(`/movies/edit/${id}`);
+  }
+
   return (
     <Container>
       <Header />
 
       <Main>
-        <ReturnToHome />
+        <div className="options-container">
+          <ReturnToHome />
+
+          <div className="movie-edit-options">
+            <button onClick={() => handleEditMovie(1)}>
+              <FiEdit3 size={20} />
+            </button>
+            <button>
+              <FiX size={20} />
+            </button>
+          </div>
+        </div>
 
         <MovieInfo>
           <div className="movie-header">
