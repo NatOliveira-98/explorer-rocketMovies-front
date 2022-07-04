@@ -1,15 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
-import avatarImg from '../../assets/avatar_placeholder.svg';
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg';
+
+import { api } from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
 
 import { Input } from '../Input';
-import { Button } from '../Button';
 
 import './styles_BurgerMenu.css';
 import { Container, Profile } from './styles';
 
 export const Header = () => {
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
+
+  const avatarURL = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
   function handleGoToProfile() {
     navigate('/profile');
@@ -29,11 +36,13 @@ export const Header = () => {
           right
         >
           <button className="user-avatar" onClick={handleGoToProfile}>
-            <img src={avatarImg} alt={`Foto de usuário`} />
+            <img src={avatarURL} alt={`Foto de ${user.name}`} />
           </button>
 
-          <h2 id="user-name">Nome do usuário</h2>
-          <button id="btn-logout-mobile">sair</button>
+          <h2 id="user-name">{user.name}</h2>
+          <button id="btn-logout-mobile" onClick={signOut}>
+            sair
+          </button>
 
           <h1 id="application-name">RocketMovies</h1>
         </Menu>
@@ -42,41 +51,15 @@ export const Header = () => {
 
         <Profile>
           <div>
-            <span>Nome do usuário</span>
-            <button>sair</button>
+            <span>{user.name}</span>
+            <button onClick={signOut}>sair</button>
           </div>
 
           <button className="user-avatar-desktop" onClick={handleGoToProfile}>
-            <img src={avatarImg} alt={`Foto de usuário`} />
+            <img src={avatarURL} alt={`Foto de ${user.name}`} />
           </button>
         </Profile>
       </div>
-
-      {/* <div id="mobile">
-        <Menu>
-          <div className="header">
-            <Link to="/profile">
-              <FiArrowLeft size={20} />
-              Voltar
-            </Link>
-          </div>
-
-          <ProfileMenu>
-            <button className="user-avatar">
-              <img src={avatarImg} alt={`Foto de usuário`} />
-            </button>
-
-            <div>
-              <h2>Nome do usuário</h2>
-              <Button>sair</Button>
-            </div>
-          </ProfileMenu>
-
-          <footer>
-            <h1>RocketMovies</h1>
-          </footer>
-        </Menu>
-      </div> */}
     </Container>
   );
 };
