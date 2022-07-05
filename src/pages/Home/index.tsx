@@ -1,5 +1,8 @@
-import { FiPlus } from 'react-icons/fi';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiPlus } from 'react-icons/fi';
+
+import { api } from '../../services/api';
 
 import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
@@ -8,19 +11,32 @@ import { Movie } from '../../components/Movie';
 import { Container, Main } from './styles';
 
 export const Home = () => {
+  const [search, setSearch] = useState('');
+  const [movies, setMovies] = useState<[]>([]);
+
   const navigate = useNavigate();
 
   function handleShowCreateMovie() {
     navigate('/movies/create');
   }
 
-  function handleShowMoviePreview(id: any) {
+  function handleShowMoviePreview(id: number) {
     navigate(`/movies/preview/${id}`);
   }
 
+  useEffect(() => {
+    async function fetchMovies() {
+      const res = await api.get(`/movies?title=${search}`);
+
+      setMovies(res.data);
+    }
+
+    fetchMovies();
+  }, [search]);
+
   return (
     <Container>
-      <Header />
+      <Header onSearch={event => setSearch(event.target.value)} />
 
       <Main>
         <div className="main-header">
@@ -32,7 +48,13 @@ export const Home = () => {
         </div>
 
         <div className="movie-tags-container">
-          <Movie onClick={() => handleShowMoviePreview(1)} />
+          {movies.map((movie, index) => (
+            <Movie
+              key={String(index)}
+              data={movie}
+              onClick={() => handleShowMoviePreview(Number(movie.id))}
+            />
+          ))}
         </div>
       </Main>
     </Container>

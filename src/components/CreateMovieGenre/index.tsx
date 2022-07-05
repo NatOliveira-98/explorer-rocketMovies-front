@@ -6,11 +6,15 @@ import { Container } from './styles';
 type CreateMovieGenreProps = InputHTMLAttributes<HTMLButtonElement> &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     isNew?: boolean;
+    btnClicked?: () => void;
+    inputChanged?: (event: any) => void;
   };
 
 export const CreateMovieGenre = ({
   isNew,
   value,
+  inputChanged,
+  btnClicked,
   ...rest
 }: CreateMovieGenreProps) => {
   return (
@@ -26,9 +30,12 @@ export const CreateMovieGenre = ({
         readOnly={!isNew}
         disabled={!isNew}
         placeholder="Novo marcador"
+        onChange={inputChanged}
       />
 
-      <button type="button">{isNew ? <FiPlus /> : <FiX />}</button>
+      <button type="button" onClick={btnClicked}>
+        {isNew ? <FiPlus /> : <FiX />}
+      </button>
     </Container>
   );
 };

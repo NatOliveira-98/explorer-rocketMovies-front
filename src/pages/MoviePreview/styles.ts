@@ -135,6 +135,12 @@ const MovieInfo = styled.div`
         object-fit: cover;
       }
     }
+
+    div:nth-child(2) {
+      svg {
+        stroke: ${({ theme }) => theme.colors.brand};
+      }
+    }
   }
 
   .tags-container {
@@ -151,6 +157,8 @@ const MovieInfo = styled.div`
   }
 
   p {
+    margin-bottom: 1.5rem;
+
     color: ${({ theme }) => theme.colors.gray_veryLight};
     font-size: 1.6rem;
     line-height: 2.1rem;
@@ -188,4 +196,28 @@ const MovieInfo = styled.div`
   }
 `;
 
-export { Container, Main, MovieInfo };
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 40rem;
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  div {
+    width: 60%;
+
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    button {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+export { Container, Main, MovieInfo, ModalContent };

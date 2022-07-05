@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from 'react-modal';
 
+import { api } from '../../services/api';
+
 import { Header } from '../../components/Header';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
@@ -41,9 +43,25 @@ const modalStyles = {
 };
 
 export const CreateMovie = () => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [rating, setRating] = useState('');
+
+  const [tags, setTags] = useState<string[]>([]);
+  const [newTag, setNewTag] = useState('');
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  function handleAddTag() {
+    setTags(prevState => [...prevState, newTag]);
+    setNewTag('');
+  }
+
+  function handleRemoveTag(deleted: string) {
+    setTags(prevState => prevState.filter(tag => tag !== deleted));
+  }
 
   function handleOpenModal() {
     setIsModalOpen(true);
@@ -55,15 +73,44 @@ export const CreateMovie = () => {
 
   function handleCancelMovieCreation(event: FormEvent) {
     event.preventDefault();
-
     handleOpenModal();
   }
 
-  function handleCreateMovie(event: FormEvent) {
+  async function handleCreateMovie(event: FormEvent) {
     event.preventDefault();
 
-    toast.success('Filme criado com sucesso');
-    setTimeout(() => navigate('/'), 1000);
+    if (!title) {
+      return toast('Informe o título do filme');
+    }
+
+    if (!rating) {
+      return toast('Dê uma nota para o filme');
+    }
+
+    if (newTag) {
+      return toast(
+        'Você deixou uma tag no campo para adicionar, clique para adicionar a mesma',
+      );
+    }
+
+    try {
+      await api.post('/movies/create', {
+        title,
+        description,
+        rating,
+        tags,
+      });
+
+      toast.success('Filme criado com sucesso');
+      setTimeout(() => navigate('/'), 1000);
+      //
+    } catch (error: any) {
+      if (error.response) {
+        toast.error(`${error.response.data.message}`);
+      } else {
+        toast.error('Não foi possível criar a nota do filme');
+      }
+    }
   }
 
   return (
@@ -78,19 +125,40 @@ export const CreateMovie = () => {
             <h2>Novo filme</h2>
 
             <div className="inputs-container">
-              <Input type="text" placeholder="Título" />
-              <Input type="number" placeholder="Sua nota (de 0 a 5)" />
+              <Input
+                type="text"
+                placeholder="Título"
+                onChange={event => setTitle(event.target.value)}
+              />
+              <Input
+                type="number"
+                placeholder="Sua nota (de 0 a 5)"
+                onChange={event => setRating(event.target.value)}
+              />
             </div>
 
-            <Textarea placeholder="Observações" />
+            <Textarea
+              placeholder="Observações"
+              onChange={event => setDescription(event.target.value)}
+            />
 
             <Markers>
               <h3>Marcadores</h3>
               <div className="movies-genre-container">
-                <CreateMovieGenre value="Ação" />
-                <CreateMovieGenre value="Ação" />
-                <CreateMovieGenre value="Ação" />
-                <CreateMovieGenre isNew />
+                {tags.map((tag, index) => (
+                  <CreateMovieGenre
+                    key={String(index)}
+                    value={tag}
+                    btnClicked={() => handleRemoveTag(tag)}
+                  />
+                ))}
+
+                <CreateMovieGenre
+                  isNew
+                  value={newTag}
+                  inputChanged={event => setNewTag(event.target.value)}
+                  btnClicked={handleAddTag}
+                />
               </div>
             </Markers>
 

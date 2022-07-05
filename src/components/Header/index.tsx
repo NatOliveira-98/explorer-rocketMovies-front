@@ -10,7 +10,11 @@ import { Input } from '../Input';
 import './styles_BurgerMenu.css';
 import { Container, Profile } from './styles';
 
-export const Header = () => {
+type HeaderType = {
+  onSearch?: (event: any) => void;
+};
+
+export const Header = ({ onSearch }: HeaderType) => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
 
@@ -27,7 +31,11 @@ export const Header = () => {
       <div>
         <h1>RocketMovies</h1>
 
-        <Input type="text" placeholder="Pesquisar pelo título" />
+        <Input
+          type="text"
+          placeholder="Pesquisar pelo título"
+          onChange={onSearch}
+        />
 
         <Menu
           className="hamburger-menu"

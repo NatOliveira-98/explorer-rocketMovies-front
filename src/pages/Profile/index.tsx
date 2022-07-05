@@ -43,14 +43,16 @@ export const Profile = () => {
   async function handleUpdateUserProfile(event: FormEvent) {
     event.preventDefault();
 
-    const user = {
+    const updated = {
       name,
       email,
       currentPassword,
       newPassword,
     };
 
-    await updateProfile({ user, avatarFile });
+    const userUpdated = Object.assign(user, updated);
+
+    await updateProfile({ user: userUpdated, avatarFile });
   }
 
   function handleChangeUserAvatar(event: ChangeEvent<HTMLInputElement>) {

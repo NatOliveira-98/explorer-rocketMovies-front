@@ -1,121 +1,205 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import Modal from 'react-modal';
 import { FiStar, FiClock, FiEdit3, FiX } from 'react-icons/fi';
-import avatarImg from '../../assets/avatar_placeholder.svg';
+
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg';
+
+import { api } from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
 
 import { Header } from '../../components/Header';
 import { ReturnToHome } from '../../components/ReturnToHome';
+import { Button } from '../../components/Button';
 import { MovieGenre } from '../../components/MovieGenre';
 
-import { Container, Main, MovieInfo } from './styles';
+import { Container, Main, MovieInfo, ModalContent } from './styles';
+
+const modalStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+
+    marginRight: '-50%',
+
+    transform: 'translate(-50%, -50%)',
+
+    backgroundColor: '#1c1b1e',
+    border: 'none',
+    borderRadius: '1rem',
+  },
+};
 
 export const MoviePreview = () => {
+  const { user } = useAuth();
+
+  const [data, setData] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const params = useParams();
   const navigate = useNavigate();
+
+  const avatarURL = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
 
   function handleEditMovie(id: number) {
     navigate(`/movies/edit/${id}`);
   }
 
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
+
+  async function handleDeleteMovieNote() {
+    await api.delete(`movies/preview/${params.id}`);
+
+    toast.success('Filme deletado com sucesso');
+    setTimeout(() => navigate('/'), 1000);
+  }
+
+  useEffect(() => {
+    async function fetchMovie() {
+      const res = await api.get(`/movies/preview/${params.id}`);
+
+      setData(res.data);
+    }
+
+    fetchMovie();
+  }, []);
+
+  console.log(data);
+
   return (
     <Container>
       <Header />
 
-      <Main>
-        <div className="options-container">
-          <ReturnToHome />
+      {data && (
+        <Main>
+          <div className="options-container">
+            <ReturnToHome />
 
-          <div className="movie-edit-options">
-            <button onClick={() => handleEditMovie(1)}>
-              <FiEdit3 size={20} />
-            </button>
-            <button>
-              <FiX size={20} />
-            </button>
-          </div>
-        </div>
+            <div className="movie-edit-options">
+              <button onClick={() => handleEditMovie(data.id)}>
+                <FiEdit3 size={20} />
+              </button>
+              <button onClick={handleOpenModal}>
+                <FiX size={20} />
+              </button>
 
-        <MovieInfo>
-          <div className="movie-header">
-            <h2>Interestellar</h2>
+              <Modal
+                isOpen={isModalOpen}
+                style={modalStyles}
+                onRequestClose={handleCloseModal}
+                ariaHideApp={false}
+              >
+                <ModalContent id="modal-content">
+                  <h2>Deseja deletar a nota do filme?</h2>
 
-            <div className="stars-rate-container">
-              <FiStar size={20} className="rate" />
-              <FiStar size={20} className="rate" />
-              <FiStar size={20} className="rate" />
-              <FiStar size={20} className="rate" />
-              <FiStar size={20} />
+                  <div>
+                    <Button isCancelEvent onClick={handleCloseModal}>
+                      Não
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleCloseModal();
+                        handleDeleteMovieNote();
+                      }}
+                    >
+                      Sim
+                    </Button>
+                  </div>
+                </ModalContent>
+              </Modal>
             </div>
           </div>
 
-          <div className="user-info">
-            <div>
-              <img src={avatarImg} alt="Foto de nome do usuário" />
-              <span>Por Nome do usuário</span>
+          <MovieInfo>
+            <div className="movie-header">
+              <h2>{data.title}</h2>
+
+              <div className="stars-rate-container">
+                <FiStar size={12} className={data.rating >= 1 ? 'rate' : ''} />
+                <FiStar size={12} className={data.rating >= 2 ? 'rate' : ''} />
+                <FiStar size={12} className={data.rating >= 3 ? 'rate' : ''} />
+                <FiStar size={12} className={data.rating >= 4 ? 'rate' : ''} />
+                <FiStar size={12} className={data.rating >= 5 ? 'rate' : ''} />
+              </div>
             </div>
 
-            <div>
-              <FiClock size={16} />
-              <span>23/05/22 às 08:00</span>
+            <div className="user-info">
+              <div>
+                <img src={avatarURL} alt={`Foto de ${user.name}`} />
+                <span>Por {user.name}</span>
+              </div>
+
+              <div>
+                <FiClock size={16} />
+                <span>
+                  {`${
+                    data.updated_at.split(/T|\s/)[0].split('-')[2]
+                    // day
+                  }/${
+                    data.updated_at.split(/T|\s/)[0].split('-')[1]
+                    // month
+                  }/${
+                    data.updated_at.split(/T|\s/)[0].split('-')[1]
+                    // year
+                  } às ${
+                    data.updated_at.split(/T|\s/)[1].split(':')[0] - 3
+                    // hour - 3 (time zone)
+                  }:${
+                    data.updated_at.split(/T|\s/)[1].split(':')[1]
+                    // minutes
+                  }`}
+                </span>
+              </div>
             </div>
-          </div>
 
-          <div className="tags-container">
-            <MovieGenre title="Ficção Científica" />
-            <MovieGenre title="Drama" />
-            <MovieGenre title="Família" />
-          </div>
+            {data.tags && (
+              <div className="tags-container">
+                {data.tags.map((tag: any) => (
+                  <MovieGenre key={String(tag.id)} title={tag.name} />
+                ))}
+              </div>
+            )}
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex
-            aspernatur iste omnis ullam ab fugit nesciunt vitae possimus culpa
-            itaque ipsam exercitationem debitis magnam quos consectetur,
-            eligendi labore eveniet, mollitia dicta facilis dignissimos
-            doloribus voluptates! Deserunt tempora velit quaerat beatae fugiat?
-            Maxime temporibus illo, incidunt quia, quae debitis consequatur
-            voluptas atque placeat aliquid vel pariatur, totam quo. Provident
-            nihil facere qui molestiae dolorum ipsa sequi, nam dolores atque sed
-            excepturi porro. Quae, architecto maiores numquam ipsum vero
-            repudiandae enim aliquam, ab veritatis sit sint impedit soluta
-            repellat officia sapiente ipsam voluptates optio dolor itaque dicta
-            aspernatur rerum eius facilis? Saepe ducimus corporis laborum ut
-            labore nostrum non quod, repellat voluptas tempora facilis harum
-            asperiores, perferendis tenetur. Commodi iste, laborum, quod ab
-            repudiandae quidem reiciendis ea ratione autem a nisi excepturi,
-            fuga corrupti cum libero vero magnam et? Sapiente ab non quibusdam
-            atque illo officia voluptatum exercitationem voluptates modi ullam
-            impedit ad distinctio consectetur quae placeat harum, esse enim
-            porro, consequatur repudiandae ipsum nihil! Obcaecati alias beatae
-            et, dolores quam quasi eos incidunt tenetur error, ex reiciendis
-            excepturi officiis expedita! Aliquid aliquam nisi, error ipsa ea sit
-            aspernatur architecto saepe nemo molestias perferendis ratione,
-            eaque nesciunt quam ullam eius animi iste.
-            <br />
-            <br />
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex
-            aspernatur iste omnis ullam ab fugit nesciunt vitae possimus culpa
-            itaque ipsam exercitationem debitis magnam quos consectetur,
-            eligendi labore eveniet, mollitia dicta facilis dignissimos
-            doloribus voluptates! Deserunt tempora velit quaerat beatae fugiat?
-            Maxime temporibus illo, incidunt quia, quae debitis consequatur
-            voluptas atque placeat aliquid vel pariatur, totam quo. Provident
-            nihil facere qui molestiae dolorum ipsa sequi, nam dolores atque sed
-            excepturi porro. Quae, architecto maiores numquam ipsum vero
-            repudiandae enim aliquam, ab veritatis sit sint impedit soluta
-            repellat officia sapiente ipsam voluptates optio dolor itaque dicta
-            aspernatur rerum eius facilis? Saepe ducimus corporis laborum ut
-            labore nostrum non quod, repellat voluptas tempora facilis harum
-            asperiores, perferendis tenetur. Commodi iste, laborum, quod ab
-            repudiandae quidem reiciendis ea ratione autem a nisi excepturi,
-            fuga corrupti cum libero vero magnam et? Sapiente ab non quibusdam
-            atque illo officia voluptatum exercitationem voluptates modi ullam
-            impedit ad distinctio consectetur quae placeat harum, esse enim
-            porro, consequatur repudiandae ipsum nihil! Obcaecati alias beatae
-            et, dolores quam quasi eos incidunt tenetur error, ex reiciendis
-            excepturi officiis expedita! Aliquid aliquam nisi, error ipsa ea sit
-            aspernatur architecto saepe nemo molestias perferendis ratione,
-            eaque nesciunt quam ullam eius animi iste.
-          </p>
-        </MovieInfo>
-      </Main>
+            {data.description && (
+              <div>
+                {data.description
+                  .split(/\n/)
+                  .map((paragraph: string, index: number) => (
+                    <p key={String(index)}>{paragraph}</p>
+                  ))}
+              </div>
+            )}
+          </MovieInfo>
+        </Main>
+      )}
+
+      <Toaster
+        toastOptions={{
+          style: {
+            backgroundColor: '#ff859b',
+            color: '#1c1b1e',
+          },
+          iconTheme: {
+            primary: '#1c1b1e',
+            secondary: '#ff859b',
+          },
+        }}
+      />
     </Container>
   );
 };
