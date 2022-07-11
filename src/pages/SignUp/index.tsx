@@ -39,7 +39,7 @@ export const SignUp = () => {
 
     try {
       await api.post('/users', { name, email, password });
-      toast.success('Filme criado com sucesso');
+      toast.success('Usuário cadastrado com sucesso');
       setTimeout(() => navigate('/'), 1000);
     } catch (error: any) {
       if (error.response) {
