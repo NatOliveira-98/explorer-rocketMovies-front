@@ -23,3 +23,5 @@ export const theme = {
 
   debugger: '1px solid red',
 };
+
+export type MyTheme = typeof theme;

@@ -48,7 +48,7 @@ export const Home = () => {
         </div>
 
         <div className="movie-tags-container">
-          {movies.map((movie, index) => (
+          {movies.map((movie: any, index) => (
             <Movie
               key={String(index)}
               data={movie}

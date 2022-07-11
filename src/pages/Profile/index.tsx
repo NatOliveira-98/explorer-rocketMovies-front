@@ -56,7 +56,7 @@ export const Profile = () => {
   }
 
   function handleChangeUserAvatar(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.currentTarget.files[0];
+    const file = event.currentTarget.files![0];
     setAvatarFile(file);
 
     const imgPreview = URL.createObjectURL(file);
