@@ -3,7 +3,7 @@
 ![rocketmovies image](./images/project.jpg)
 
 - An application that allows people to create notes about movies, give rates and add genre tags.
-- The user can create an account, login/logout, and see/edit all notes created.
+- The user can create an account, login/logout, and see/edit all created notes.
 
 ## Technologies
 
